@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h1>ABHINAV GUPTA WEATHER APP</h1>
+        <br>
+        <h2>Please Enter city Name </h2>
+
+        CityName:<input v-model="city"><br>
+        <button v-on:click="cw"> Click Here</button>
+<!-- pack for umbrella -->
+        <div v-if="rain!=nuLL">{{rain}}</div>
+<!-- pack for hot or cold -->
+        <div v-if="temp!=null">It will be {{temp}} so pack accordingly</div>
+
+    </div>
+</body>
+</html>
