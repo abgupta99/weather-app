@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="app">
+    <div id="weatherapp">
         <h1>ABHINAV GUPTA WEATHER APP</h1>
         <br>
         <h2>Please Enter city Name </h2>
@@ -19,6 +19,34 @@
         <div v-if="rain!=nuLL">{{rain}}</div>
 <!-- pack for hot or cold -->
         <div v-if="temp!=null">It will be {{temp}} so pack accordingly</div>
+
+        <script>
+            var app=new Vue({
+                el:'#weatherapp',//it is used to enter  element id we are using
+                data: {
+                    city:null,
+
+                    temp:null,
+
+                    rain:null
+                }, //we will get our data here ,it is basically reactive part
+            
+            methods:{
+                cw:information
+            }
+            )
+            //
+            function information()
+            {
+                let prom=fetch("weather/"+this.city);
+                prom.then(response=>response.json())
+                    .then(response=>{
+                        this.city=response.city;
+                        this.temp=response.temp;
+                        
+                    })
+            }
+        </script>
 
     </div>
 </body>
