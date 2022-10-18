@@ -5,49 +5,61 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Weather FOrecast</title>
 </head>
+<style>
+    
+</style>
 <body>
-    <div id="weatherapp">
+    <div id="app">
         <h1>ABHINAV GUPTA WEATHER APP</h1>
         <br>
         <h2>Please Enter city Name </h2>
 
         CityName:<input v-model="city"><br>
         <button v-on:click="cw"> Click Here</button>
+        <br>
 <!-- pack for umbrella -->
-        <div v-if="rain!=nuLL">{{rain}}</div>
+        <!-- <div v-if="rain!=null">{{rain}}</div> -->
+     <div>{{rain}}</div>
+
+     <br>
 <!-- pack for hot or cold -->
-        <div v-if="temp!=null">It will be {{temp}} so pack accordingly</div>
-
-        <script>
-            var app=new Vue({
-                el:'#weatherapp',//it is used to enter  element id we are using
-                data: {
-                    city:null,
-
-                    temp:null,
-
-                    rain:null
-                }, //we will get our data here ,it is basically reactive part
-            
-            methods:{
-                cw:information
-            }
-            )
-            //
-            function information()
-            {
-                let prom=fetch("weather/"+this.city);
-                prom.then(response=>response.json())
-                    .then(response=>{
-                        this.city=response.city;
-                        this.temp=response.temp;
-                        
-                    })
-            }
-        </script>
-
+        <!-- <div v-if="temp!=null">It will be {{temp}} so pack accordingly</div> -->
+        <div>It will be {{temp}} so pack accordingly</div>
     </div>
+
+    <script>
+        Vue.config.productionTip = false;
+        var app=new Vue({
+            el:'#app',//it is used to enter  element id we are using
+            data: {
+                city:'',
+
+                temp:'hot',
+
+                rain:'rain',
+                list:[]
+            }, //we will get our data here ,it is basically reactive part
+        
+        methods:{
+            cw:information
+        }
+    })
+        //
+        function information()
+        {
+            let prom=fetch("/weather/"+this.city);
+            prom.then(data=>data.json())
+                .then(data=>{
+                 
+                    this.temp=data.temp;
+                    this.rain=data.rain;
+                    this.list=data.list;
+                    console.log(data.list);
+                    
+                })
+        }
+    </script>
 </body>
 </html>
