@@ -8,37 +8,105 @@
     <title>Weather FOrecast</title>
 </head>
 <style>
+    body{
+        margin: 10px;
+        padding: 0;
+        box-sizing:border-box;
+        /* background-color: yellow; */
+        background-image: url(image.jpg);
+        background-size: cover;
+        
+    }
+    #app
+    {
+        background-color: gray; 
     
+    }
+    .search{
+        display:inline-block;
+        width:100%;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .bar{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        min-height: 25px;
+    }
+    table,th,td{
+        width:80%;
+        margin:auto;
+        border:1px solid white;
+        border-collapse:collapse;
+        text-align:center;
+        font-size:30px;
+        background:blue;
+        opacity: 1;
+
+    }
+    .data{
+        border: 15px solid red;
+       padding: 50px;
+       margin: 50px;
+       margin-left:auto ;
+       margin-right: auto;
+       font-size: 30px;
+       width:320px;
+       height:20px;
+       padding:auto;
+    }
+   
 </style>
 <body>
     <div id="app">
-        <h1>ABHINAV GUPTA WEATHER APP</h1>
+        <h1 style="text-align:center;">ABHINAV GUPTA WEATHER APP</h1>
         <br>
-        <h2>Please Enter city Name </h2>
+        <h2 style="text-align: center;">Please Enter city Name </h2>
 
-        CityName:<input v-model="city"><br>
-        <button v-on:click="cw"> Click Here</button>
+        <input v-model="city" class="bar"><br>
+       <div class="search"> <button v-on:click="cw">   Click Here</button></div>
+
         <br>
+        <div v-if="temp==''">We cant show Data because either the city doesnt exist or you havent entered anything</div>
 <!-- pack for umbrella -->
         <!-- <div v-if="rain!=null">{{rain}}</div> -->
-     <div>{{rain}}</div>
+     <div class="data" style="text-align: center;"> {{rain}}</div>
+     <div class="data" style="text-align: center;"> {{pol}}</div>
 
      <br>
 <!-- pack for hot or cold -->
         <!-- <div v-if="temp!=null">It will be {{temp}} so pack accordingly</div> -->
-        <div>It will be {{temp}} so pack accordingly</div>
+        <div style="text-align:center;" class="data">{{temp}}</div>
+        <br><br>
+        <!-- <img src="image.JPG" alt=”an artist's rendition of a black hole in space”> -->
+        <table v-if>
+            <tr>
+                <th>Date</th>
+                <th>Temperature</th>
+                <th>Windspeed</th>
+                
+            </tr>
+            <tr v-for="r in list">
+                <td>{{r.Date}}</td>
+                <td>{{r.temp}}</td>
+                <td>{{r.wind}}</td>
+            </tr>
+        </table> 
     </div>
 
+
+ 
     <script>
         Vue.config.productionTip = false;
         var app=new Vue({
             el:'#app',//it is used to enter  element id we are using
             data: {
-                city:'',
+                
+                temp:'',
 
-                temp:'hot',
-
-                rain:'rain',
+                rain:'',
+                pol:'',
                 list:[]
             }, //we will get our data here ,it is basically reactive part
         
@@ -56,6 +124,7 @@
                     this.temp=data.temp;
                     this.rain=data.rain;
                     this.list=data.list;
+                    this.pol=data.pol;
                     console.log(data.list);
                     
                 })
