@@ -4,14 +4,14 @@ const express = require('express');
 const request = require('request');
 const path=require("path");
 //var cors = require('cors')
-const port=3000;
+const PORT=3000;
 let publicPath= path.resolve(__dirname,"public")
 
 
 const app = express();
 //app.use(cors());
 app.use(express.static(publicPath))
-app.listen(process.env.port || 3000, () => console.log('Server started on port 3000'));
+app.listen(process.env.PORT || PORT, () => console.log('Server started on port 3000'));
 
   app.get("/", function (req, res) {
       res.sendFile(path.join(__dirname + "/client.html"))})//uses to send html file as a response using localhost:3000
