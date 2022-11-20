@@ -8,7 +8,7 @@ const PORT=3000;
 let publicPath= path.resolve(__dirname,"public")
 
 
-const app = express();
+const app = express();//ffffffffff
 //app.use(cors());
 app.use(express.static(publicPath))
 app.listen(process.env.PORT || PORT, () => console.log('Server started on port 3000'));
