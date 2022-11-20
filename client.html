@@ -5,49 +5,166 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Weather FOrecast</title>
+    <script src="https://kit.fontawesome.com/e97326952b.js" crossorigin="anonymous"></script>
 </head>
+<style>
+    body{
+        margin: 10px;
+        padding: 0;
+        box-sizing:border-box;
+        background-color: white;
+        background-image: url("https://wallpaperaccess.com/full/7285291.jpg");
+        background-size: cover;
+        /* background-color: yellow; */
+       
+        
+    }
+    #app
+    {
+        /* background-color: yellowgreen;  */
+      
+       
+     color: white;
+    }
+    .search{
+        display:inline-block;
+        width:100%;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .bar{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        min-height: 25px;
+    }
+    table,th,td{
+        width:80%;
+        margin:auto;
+        border:1px solid white;
+        border-collapse:collapse;
+        text-align:center;
+        font-size:30px;
+        background:blue;
+        opacity: 0.8;
+
+    }
+    .data{
+        border: 5px solid red;
+       padding: 50px ;
+      color: black;
+       margin: 50px;
+       margin-left:auto ;
+       margin-right: auto;
+       font-size: 30px;
+       width:320px;
+       height:20px;
+       padding:auto;
+       background-color: bisque;
+    }
+    .dark-mode {
+        background-image: url("https://cdn.pixabay.com/photo/2018/03/15/10/40/panoramic-3227796_960_720.jpg");
+        background-size: cover;
+  color: white;
+}
+</style>
 <body>
-    <div id="weatherapp">
-        <h1>ABHINAV GUPTA WEATHER APP</h1>
+
+    <img src="image1.jpg" alt="">
+    <div id="app">
+        <h1 style="text-align:center;">ABHINAV GUPTA WEATHER APP</h1>
         <br>
-        <h2>Please Enter city Name </h2>
+        <h2 style="text-align: center;">Please Enter city Name </h2>
 
-        CityName:<input v-model="city"><br>
-        <button v-on:click="cw"> Click Here</button>
+        <input v-model="city" class="bar"><br>
+       <div class="search"> <button v-on:click="cw">   Click Here</button></div>
+       <div class="search"><button onclick="myFunction()">Toggle Between day and night</button>
+       </div>
+        
+        <br>
+        <div v-if="message!=0" style="text-align: center;font-size: 20px;font-weight: bold;">We cant show Data because either the city doesnt exist or you havent entered anything</div>
 <!-- pack for umbrella -->
-        <div v-if="rain!=nuLL">{{rain}}</div>
+       
+       
+     <div class="data" style="text-align: center;"> <i class="fa-sharp fa-solid fa-umbrella"></i>
+
+        {{rain}}</div>
+        
+     <div class="data" style="text-align: center;"><i class="fa-solid fa-mask-face"></i>
+
+        {{pol}}</div>
+
+     <br>
+    
+
+
+
+     <!-- <div class="circular" v-bind:style="{ backgroundImage: 'url(' + image.jpg + ')' }"></div> -->
 <!-- pack for hot or cold -->
-        <div v-if="temp!=null">It will be {{temp}} so pack accordingly</div>
-
-        <script>
-            var app=new Vue({
-                el:'#weatherapp',//it is used to enter  element id we are using
-                data: {
-                    city:null,
-
-                    temp:null,
-
-                    rain:null
-                }, //we will get our data here ,it is basically reactive part
-            
-            methods:{
-                cw:information
-            }
-            )
-            //
-            function information()
-            {
-                let prom=fetch("weather/"+this.city);
-                prom.then(response=>response.json())
-                    .then(response=>{
-                        this.city=response.city;
-                        this.temp=response.temp;
-                        
-                    })
-            }
-        </script>
-
+        <!-- <div v-if="temp!=null">It will be {{temp}} so pack accordingly</div> -->
+        <div style="text-align:center;" class="data"><i class="fa-solid fa-shirt"></i>{{temp}}</div>
+        <br><br>
+        <!-- <img src="image.JPG" alt=”an artist's rendition of a black hole in space”> -->
+        <table >
+            <tr>
+                <th>Date</th>
+                <th>Temperature</th>
+                <th>Windspeed</th>
+                <th>Rainlevel</th>
+                
+            </tr>
+            <tr v-for="r in list">
+                <td>{{r.Date}}</td>
+                <td>{{r.temp}}</td>
+                <td>{{r.wind}}</td>
+                <td>{{r.RAIN}}</td>
+            </tr>
+        </table> 
     </div>
+
+
+ 
+    <script>
+        Vue.config.productionTip = false;
+        var app=new Vue({
+            el:'#app',//it is used to enter  element id we are using
+            data: {
+                
+                temp:'',
+
+                rain:'',
+                pol:'',
+                message:'',
+                list:[]
+            }, //we will get our data here ,it is basically reactive part
+        
+        methods:{
+            cw:information
+        }
+    })
+        //
+        function information()
+        {
+            let prom=fetch("/weather/"+this.city);
+            prom.then(data=>data.json())
+                .then(data=>{
+                 
+                    this.temp=data.temp;
+                    this.rain=data.rain;
+                    this.list=data.list;
+                    this.pol=data.pol;
+                    this.message=data.message;
+                    console.log(data.list);
+                    
+                })
+        }
+        
+function myFunction() {
+   var element = document.body;
+   element.classList.toggle("dark-mode");
+}
+
+    </script>
 </body>
 </html>
